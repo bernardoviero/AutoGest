@@ -1,28 +1,54 @@
-## Learning Laravel
+# Learning Laravel
 
-Laravel project - test;
+Projeto Laravel - Estrutura de pastas (Clean Architecture adaptada)
 
+```text
 app/
-├── Domain/                  # Lógica de negócio pura (entidades, value objects, repositories interfaces)
-│   ├── Entities/            # Models como entidades DDD (ex: Appointment, Service, Client, Vehicle)
-│   ├── ValueObjects/        # Objetos imutáveis (ex: Money para preços, Duration para tempos)
-│   ├── Repositories/        # Interfaces (ex: AppointmentRepositoryInterface)
-│   └── Exceptions/          # Exceções de domínio (ex: ScheduleConflictException)
-├── Application/             # Serviços e use cases (orquestra domain)
-│   ├── Services/            # Serviços (ex: AppointmentService com métodos como bookAppointment())
-│   ├── DTOs/                # Data Transfer Objects (ex: CreateAppointmentDTO)
-│   └── Jobs/                # Jobs para queues (ex: SendReminderJob)
-├── Infrastructure/          # Implementações concretas
-│   ├── Persistence/         # Repositories concretos (ex: EloquentAppointmentRepository implements AppointmentRepositoryInterface)
-│   ├── Notifications/       # Implementações de notificações (ex: InternalNotificationService)
-│   └── Queues/              # Configs para queues
-├── Http/                    # Presentation layer (API)
-│   ├── Controllers/         # Controllers (ex: AppointmentController)
-│   ├── Requests/            # FormRequests para validação (ex: CreateAppointmentRequest)
-│   ├── Resources/           # API Resources (ex: AppointmentResource para responses JSON)
-│   └── Middleware/          # Custom middleware (ex: CheckScheduleAvailability)
-├── Routes/                  # Rotas separadas (api.php, web.php se necessário)
-├── Tests/                   # Unit/Feature tests
-├── Config/                  # Configs padrão Laravel
-├── Database/                # Migrations, Seeders, Factories
-└── bootstrap/               # Padrão
+├── Domain/                  # Lógica de negócio pura (independente de framework)
+│   ├── Entities/            # Entidades / Models no estilo DDD
+│   │                        # Exemplos: Appointment, Service, Client, Vehicle
+│   ├── ValueObjects/        # Objetos de valor imutáveis
+│   │                        # Exemplos: Money (para preços), Duration (para tempos)
+│   ├── Repositories/        # Interfaces de repositórios (contratos)
+│   │                        # Exemplo: AppointmentRepositoryInterface
+│   └── Exceptions/          # Exceções específicas do domínio
+│                            # Exemplo: ScheduleConflictException
+│
+├── Application/             # Casos de uso / Orquestração da lógica de negócio
+│   ├── Services/            # Serviços de aplicação (use cases)
+│   │                        # Exemplo: AppointmentService com bookAppointment()
+│   ├── DTOs/                # Data Transfer Objects (estruturas para transferência de dados)
+│   │                        # Exemplo: CreateAppointmentDTO
+│   └── Jobs/                # Jobs para filas (queues)
+│                            # Exemplo: SendReminderJob
+│
+├── Infrastructure/          # Implementações concretas (adaptações ao framework/DB/etc)
+│   ├── Persistence/         # Repositórios concretos (implementam as interfaces do Domain)
+│   │                        # Exemplo: EloquentAppointmentRepository
+│   ├── Notifications/       # Implementações de notificações
+│   │                        # Exemplo: InternalNotificationService
+│   └── Queues/              # Configurações relacionadas a filas
+│
+├── Http/                    # Camada de apresentação (API / Controllers)
+│   ├── Controllers/         # Controllers da aplicação
+│   │                        # Exemplo: AppointmentController
+│   ├── Requests/            # Form Requests para validação de entrada
+│   │                        # Exemplo: CreateAppointmentRequest
+│   ├── Resources/           # API Resources (formatação de respostas JSON)
+│   │                        # Exemplo: AppointmentResource
+│   └── Middleware/          # Middlewares customizados
+│                            # Exemplo: CheckScheduleAvailability
+│
+├── Routes/                  # Definição de rotas (separadas por tipo)
+│                            # api.php, web.php, etc.
+│
+├── Tests/                   # Testes unitários e de feature
+│
+├── Config/                  # Arquivos de configuração padrão do Laravel
+│
+├── Database/                # Banco de dados relacionado
+│   ├── migrations/          # Migrations
+│   ├── seeders/             # Seeders
+│   └── factories/           # Factories
+│
+└── bootstrap/               # Arquivos de inicialização do framework (padrão Laravel)
