@@ -1,0 +1,17 @@
+_format_version: "3.0"
+
+services:
+  - name: laravel-service
+    url: http://nginx:80   # proxy para o Nginx interno
+    routes:
+      - name: everything
+        paths:
+          - /               # aceita qualquer caminho que comece com /
+        strip_path: false
+
+    plugins:
+      # Opcional: rate limiting leve só pra testar
+      - name: rate-limiting
+        config:
+          minute: 100
+          policy: local
